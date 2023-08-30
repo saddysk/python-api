@@ -1,0 +1,5 @@
+Flask
+pydub
+supabase
+python-dotenv
+gunicorn

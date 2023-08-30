@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment (venv) directories
+venv/
+*.venv
+venv.bak/
+.env
+
+# Flask file instances
+instance/
+.webassets-cache
+
+# Databases
+*.sqlite
+
+# Logs
+*.log
+
+# Configurations with secrets
+*.cfg
+
+# IDE-specific (VS Code, PyCharm)
+.vscode/
+.idea/
+
+# OS-specific (macOS)
+.DS_Store
