@@ -9,8 +9,6 @@ BUCKET: str = os.environ.get('SUPABASE_BUCKET')
 URL: str = os.environ.get('SUPABASE_URL')
 KEY: str = os.environ.get('SUPABASE_SERVICE_ROLE_KEY')
 
-print("SUPABASE_URL:", os.environ.get('SUPABASE_URL'))
-
 supabase = create_client(URL, KEY)
 
 def trim_and_upload_mp3(input_source, start_time_ms, end_time_ms, file_name):
