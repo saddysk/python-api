@@ -6,6 +6,10 @@ load_dotenv()
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def home():
+    return 'WAGMI!'
+
 # TODO: improve the code to accept audio in .mp3 file format as well
 @app.route('/mp3/trim_and_upload', methods=['POST'])
 def api_trim_and_upload():
@@ -39,4 +43,4 @@ def api_trim_and_upload():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5001)
