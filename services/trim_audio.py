@@ -43,9 +43,8 @@ def trim_and_upload_mp3(input_source, start_time_ms, end_time_ms, file_name):
     # Check if upload was successful
     if response.status_code == 200:
         print("Audio uploaded successfully!")
-        
-        file_path = response.json()
-        return file_path.get('Key')
+
+        return file_name
     else:
         print("Failed to upload audio:", response.json())
         return response.json()
