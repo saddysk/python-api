@@ -1,8 +1,5 @@
 from flask import Flask, request, jsonify
-from dotenv import load_dotenv
 from services.trim_audio import trim_and_upload_mp3
-
-load_dotenv()
 
 app = Flask(__name__)
 
@@ -17,10 +14,9 @@ def api_trim_and_upload():
     url = data.get('url')
     start_time_ms = data.get('start')
     end_time_ms = data.get('end')
-    file_name = data.get('fileName')
 
-    if not all([url, start_time_ms, end_time_ms, file_name]):
-        return jsonify({"status": "error", "message": "All fields (url, start, end, file_name) are required!"}), 400
+    if not all([url, start_time_ms, end_time_ms]):
+        return jsonify({"status": "error", "message": "All fields (url, start, end) are required!"}), 400
 
     # Convert start and end times to integers (assuming they're sent as strings)
     try:
@@ -30,13 +26,13 @@ def api_trim_and_upload():
         return jsonify({"status": "error", "message": "Start and End times should be valid integers!"}), 400
 
     # Call the function and get the resulting URL
-    trimmed_audio_url = trim_and_upload_mp3(url, start_time_ms, end_time_ms, file_name)
+    response = trim_and_upload_mp3(url, start_time_ms, end_time_ms)
 
     # Return the resulting URL in the response
     response_data = {
         "status": 'success',
         "code": 200,
-        "data": trimmed_audio_url
+        "data": response
     }
 
     return jsonify(response_data), 200

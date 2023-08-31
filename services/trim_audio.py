@@ -1,17 +1,9 @@
-import os
 import io
+import base64
 from pydub import AudioSegment
-from supabase import create_client
 import urllib.request
 
-# Initialize Supabase client
-BUCKET: str = os.environ.get('SUPABASE_BUCKET')
-URL: str = os.environ.get('SUPABASE_URL')
-KEY: str = os.environ.get('SUPABASE_SERVICE_ROLE_KEY')
-
-supabase = create_client(URL, KEY)
-
-def trim_and_upload_mp3(input_source, start_time_ms, end_time_ms, file_name):
+def trim_and_upload_mp3(input_source, start_time_ms, end_time_ms):
     """Trim an MP3 file and upload the trimmed audio to Supabase without saving it locally."""
     
     # Determine the input source type (URL or local path)
@@ -35,16 +27,8 @@ def trim_and_upload_mp3(input_source, start_time_ms, end_time_ms, file_name):
     # Save the trimmed audio to a byte stream (in-memory)
     buffer = io.BytesIO()
     trimmed_audio.export(buffer, format="mp3")
-    raw_byte_data = buffer.getvalue()
-    
-    # Upload the trimmed audio to Supabase
-    response = supabase.storage.from_(BUCKET).upload(file_name, raw_byte_data)
-    
-    # Check if upload was successful
-    if response.status_code == 200:
-        print("Audio uploaded successfully!")
 
-        return file_name
-    else:
-        print("Failed to upload audio:", response.json())
-        return response.json()
+    # convert to base64
+    base64_encoded_audio = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    return base64_encoded_audio
